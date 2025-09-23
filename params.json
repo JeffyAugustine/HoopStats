@@ -1,0 +1,10 @@
+{
+  "videoShape" : [3840, 2160],
+  "birdEyeViewShape" : [612, 433],
+
+  "cameraPoints" : [[973, 932], [2841, 936], [383, 1316], [3440, 1311]],
+  "birdEyePoints" : [[88, 91], [523, 91], [87, 333], [523, 334]],
+
+  "birdEyeCoordinates" : [[88, 91], [523, 91]],
+  "lanes_mask" : 87
+}
