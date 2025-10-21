@@ -4,178 +4,105 @@ import numpy as np
 
 class Parameters:
     """
-    Parameters used for transferring between camera view and Bird Eye view,
-    and between Bird Eye view and lat / lon
-    List of Parameters:
-
-        unwarp_M:       The matrix used for unwarping (from Camera view to Bird Eye View)
-        unwarp_Minv:    Inverted unwarp_M (from Bird Eye to Camera View)
-        lonA, lonB:     longitude = lonA * x + lonB, where x - pixel coordinate
-        latA, latB:     latitude = latA * y + latB, where y - pixel coordinate
-
-    This class contains also methods that allow to load data from json file and generate the necessary
-    parameters
-
+    Parameters used for transforming between camera view and Bird’s Eye view.
+    This version is simplified for HoopStats, where only pixel-based
+    transformations are required (no latitude/longitude mapping).
     """
 
     def __init__(self):
-        self.unwarp_M = None # The matrix used for unwarping (from Camera view to Bird Eye View)
-        self.unwarp_Minv = None # Inverted unwarp_M (from Bird Eye to Camera View)
-        self.lonA, self.lonB = None, None # longitude = lonA * x + lonB, where x - pixel coordinate
-        self.latA, self.latB = None, None # latitude = latA * y + latB, where y - pixel coordinate
+        # Perspective matrices
+        self.unwarp_M = None       # Camera → Bird’s Eye
+        self.unwarp_Minv = None    # Bird’s Eye → Camera
 
-        self.elevation = None # Elevation of an intersection
-        
+        # Optional parameters (for compatibility / extensions)
+        self.elevation = None
         self.lanes_mask = None
 
+    # ----------------------------------------------------------------------
     def __generate_unwarp_matrices(self, cameraPoints, birdEyePoints):
         """
-        Generates the matrices responsible for switching between Camera and Bird Eye views.
-        Arguments:
-            cameraPoints  - list of lists of pixel coordinates from the Camera Image
-                            [ [x1, y1], [x2, y2], [x3, y3], [x4, y4] ]
-            birdEyePoints - list of lists of pixel coordinates from the Bird Eye Image
-                            [ [x1, y1], [x2, y2], [x3, y3], [x4, y4] ]
+        Generates homography matrices for mapping between camera and bird’s-eye view.
+        Both input point sets must contain exactly four points.
         """
-
-        # Check data
-
-        assert isinstance(cameraPoints, (list, tuple)), (
-            'cameraPoints should be a list or a tuple. It is a {}'.format(type(cameraPoints))
-        )
-        assert isinstance(birdEyePoints, (list, tuple)), (
-            'birdEyePoints should be a list or a tuple. It is a {}'.format(type(birdEyePoints))
-        )
-        assert len(cameraPoints) == 4, (
-            'Len of cameraPoints should be 4. It is {}'.format(len(cameraPoints))
-        )
-        assert len(birdEyePoints) == 4, (
-            'Len of birdEyePoints should be 4. It is {}'.format(len(birdEyePoints))
-        )
-        for i in range(4):
-            assert isinstance(cameraPoints[i], (list, tuple)), (
-                'cameraPoints[{}] should be a list or a tuple. It is a {}'
-                    .format(i, type(cameraPoints[i]))
-            )
-            assert isinstance(birdEyePoints[i], (list, tuple)), (
-                'birdEyePoints[{}] should be a list or a tuple. It is a {}'
-                    .format(i, type(birdEyePoints[i]))
-            )
-            assert len(cameraPoints[i]) == 2, (
-                'Len of cameraPoints[{}] should be 2. It is {}'.format(i, len(cameraPoints))
-            )
-            assert len(birdEyePoints[i]) == 2, (
-                'Len of birdEyePoints[{}] should be 2. It is {}'.format(i, len(birdEyePoints))
-            )
+        if len(cameraPoints) != 4 or len(birdEyePoints) != 4:
+            raise ValueError("Both 'cameraPoints' and 'birdEyePoints' must contain exactly 4 points.")
 
         cameraPoints = np.float32(cameraPoints)
         birdEyePoints = np.float32(birdEyePoints)
 
         self.unwarp_M = cv2.getPerspectiveTransform(cameraPoints, birdEyePoints)
         self.unwarp_Minv = cv2.getPerspectiveTransform(birdEyePoints, cameraPoints)
+        print("✅ Perspective transform matrices generated successfully.")
 
-    def __generate_latlon_coefs(self, birdEyeCoordinates, latLonCoordinates):
-        """
-        Generates the coeffitiens responsible for going from pixels to latitudes, longitudes.
-        Arguments:
-            birdEyeCoordinates -    list of lists of coordinates from the Bird Eye Image
-                                    [ [x1, y1], [x2, y2] ]
-            latLonCoordinates -     list of lists of longitudes and latitudes corresponding with
-                                    points stored in birdEyeCoordinates
-                                    [ [lon1, lat1], [lon2, lat2] ]
-        """
-
-        # Check data
-
-        assert isinstance(birdEyeCoordinates, (list, tuple)), (
-            'birdEyeCoordinates should be a list or tuple. It is a {}'.format(type(birdEyeCoordinates))
-        )
-        assert isinstance(latLonCoordinates, (list, tuple)), (
-            'latLonCoordinates should be a list or tuple. It is a {}'.format(type(latLonCoordinates))
-        )
-        assert len(birdEyeCoordinates) == 2, (
-            'Len of birdEyeCoordinates should be 2. It is {}'.format(len(birdEyeCoordinates))
-        )
-        assert len(latLonCoordinates) == 2, (
-            'Len of latLonCoordinates should be 2. It is {}'.format(len(latLonCoordinates))
-        )
-        for i in range(2):
-            assert isinstance(birdEyeCoordinates[i], (list, tuple)), (
-                'birdEyeCoordinates[{}] should be a list or tuple. It is a {}'
-                    .format(i, type(birdEyeCoordinates[i]))
-            )
-            assert isinstance(latLonCoordinates[i], (list, tuple)), (
-                'latLonCoordinates[{}] should be a list or tuple. It is a {}'
-                    .format(i, type(latLonCoordinates[i]))
-            )
-            assert len(birdEyeCoordinates[i]) == 2, (
-                'Len of birdEyeCoordinates[{}] should be 2. It is {}'.format(i, len(birdEyeCoordinates))
-            )
-            assert len(latLonCoordinates) == 2, (
-                'Len of latLonCoordinates[{}] should be 2. It is {}'.format(i, len(latLonCoordinates))
-            )
-
-        x1, y1 = birdEyeCoordinates[0]
-        x2, y2 = birdEyeCoordinates[1]
-        lon1, lat1 = latLonCoordinates[0]
-        lon2, lat2 = latLonCoordinates[1]
-
-        self.lonA = (lon1 - lon2) / (x1 - x2)
-        self.lonB = lon1 - x1 * self.lonA
-
-        self.latA = (lat1 - lat2) / (y1 - y2)
-        self.latB = lat1 - y1 * self.latA
-
+    # ----------------------------------------------------------------------
     def generateParameters(self, jsonfile):
         """
-        Computes and sets parameters based on the given json file
-        Arguments:
-            jsonfile - path to the file
+        Loads camera-to-bird-eye mapping and optional parameters from a JSON file.
+        Expected JSON structure:
+        {
+            "cameraPoints": [[x1,y1],[x2,y2],[x3,y3],[x4,y4]],
+            "birdEyePoints": [[x1,y1],[x2,y2],[x3,y3],[x4,y4]],
+            "lanes_mask": "optional_mask_path",
+            "elevation": optional_value
+        }
         """
-
-        with open(jsonfile) as f:
+        with open(jsonfile, 'r') as f:
             data = json.load(f)
-        self.__generate_unwarp_matrices(data['cameraPoints'], data['birdEyePoints'])
-        self.__generate_latlon_coefs(data['birdEyeCoordinates'], data['latLonCoordinates'])
 
+        if 'cameraPoints' not in data or 'birdEyePoints' not in data:
+            raise ValueError("JSON must contain 'cameraPoints' and 'birdEyePoints'.")
+
+        self.__generate_unwarp_matrices(data['cameraPoints'], data['birdEyePoints'])
+
+        # Optional attributes
         if 'elevation' in data:
             self.elevation = data['elevation']
-            
-        if 'lanes_mask' in data:
-            self.lanes_mask = data['lanes_mask']
 
-            
-    def birdEye2Geocoordinates(self, x, y):
-        """
-        Computes longitude and latitude given the image point coordinates
-        Arguments:
-            x, y - point coordinates (bird eye view)
-        Returns:
-            longitude, latitude (float, float) - geocoordinates
-        """
-        longitude = self.lonA * x + self.lonB
-        latitude = self.latA * y + self.latB
-        return longitude, latitude
-    
-    def geocoordinates2BirdEye(self, longitude, latitude):
-        """
-        Computes birdeye view x and y given the geocoordinates
-        Arguments:
-            longitude, latitude - geocoordinates
-        Returns:
-            x, y (int, int) - point coordinates
-        """
-        x = (longitude - self.lonB) / self.lonA
-        y = (latitude - self.latB) / self.latA
-        
-        return np.round(x).astype(int), np.round(y).astype(int)
-    
+        if 'lanes_mask' in data:
+            mask_path = data['lanes_mask']
+            try:
+                self.lanes_mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
+                if self.lanes_mask is not None:
+                    print(f"✅ Lanes mask loaded: {mask_path}")
+                else:
+                    print(f"⚠️ Unable to load lanes mask at {mask_path}")
+            except Exception as e:
+                print(f"⚠️ Error loading lanes mask: {e}")
+
+        print("ℹ️ Latitude/Longitude mapping skipped (not needed for HoopStats).")
+
+    # ----------------------------------------------------------------------
     def camera2BirdEye(self, x, y):
+        """
+        Transforms pixel coordinates from the camera view to the Bird’s Eye view.
+        """
+        if self.unwarp_M is None:
+            raise ValueError("Transformation matrix not initialized.")
         src = np.array([[[x, y]]], dtype='float32')
         trans = cv2.perspectiveTransform(src, self.unwarp_M)
         return trans[0][0]
-    
-    def camera2Geocoordinates(self, x, y):
-        birdEyeX, birdEyeY = self.camera2BirdEye(x, y)
-        return self.birdEye2Geocoordinates(birdEyeX, birdEyeY)
-    
+
+    # ----------------------------------------------------------------------
+    def birdEye2Camera(self, x, y):
+        """
+        Transforms pixel coordinates from the Bird’s Eye view to the camera view.
+        """
+        if self.unwarp_Minv is None:
+            raise ValueError("Inverse transformation matrix not initialized.")
+        src = np.array([[[x, y]]], dtype='float32')
+        trans = cv2.perspectiveTransform(src, self.unwarp_Minv)
+        return trans[0][0]
+
+    # ----------------------------------------------------------------------
+    def getZoneID(self, birdEyeX, birdEyeY):
+        """
+        Returns zone ID based on preloaded lane mask.
+        Each pixel intensity represents a unique zone.
+        """
+        if self.lanes_mask is None:
+            return None
+
+        x, y = int(birdEyeX), int(birdEyeY)
+        if 0 <= y < self.lanes_mask.shape[0] and 0 <= x < self.lanes_mask.shape[1]:
+            return int(self.lanes_mask[y, x])
+        return None
