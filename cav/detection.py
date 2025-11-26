@@ -86,7 +86,6 @@ class ObjectDetector:
             scores = output_dict['detection_scores']
             classes = output_dict['detection_classes']
 
-            # Keep only person (1) and sports ball (37)
             valid_classes = [1, 37]
             cond = (scores > detectThreshold) & np.isin(classes, valid_classes)
 

@@ -10,12 +10,6 @@ class Zones:
     ---------------------------------
     This class detects and analyzes player/ball movement across predefined
     basketball court zones (defined via a color-coded mask image).
-
-    Functions:
-        - Load and update zone masks
-        - Track objects per zone
-        - Count transitions between zones
-        - Generate visual tables for analysis
     """
 
     def __init__(self, path, params=None, queue_size=50):
@@ -35,7 +29,6 @@ class Zones:
             for i, color in enumerate(params.zones_mask):
                 self.mask[self.mask == color] = i + 1
         else:
-            # Default: assign each unique color to a new zone ID
             unique_colors = np.unique(self.mask)
             for i, color in enumerate(unique_colors[1:]):  # Skip background (0)
                 self.mask[self.mask == color] = i + 1
@@ -53,7 +46,6 @@ class Zones:
     def getZoneOccupancy(self, zone, timeStamp=None, timeScope=None, lookback=10):
         """
         Returns the average time or frequency of object presence in a given zone.
-        Replaces the 'getMeanSpeed' concept from traffic analysis.
         """
         durations = np.array([])
         for obj in self.zoneQueue[zone]:
@@ -128,7 +120,6 @@ class Zones:
         backend_ = mpl.get_backend()
         mpl.use("Agg")  # Disable GUI rendering
 
-        # --- Zone Occupancy Table ---
         df = DataFrame(columns=['Detections', 'Avg Time [s]'])
         for i in range(self.nrZones):
             duration = self.getZoneOccupancy(i + 1)
@@ -158,7 +149,6 @@ class Zones:
         data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
         plt.close()
 
-        # --- Zone Transition Matrix ---
         fig = plt.figure()
         ax = plt.subplot(111, frame_on=False)
         ax.xaxis.set_visible(False)
@@ -177,10 +167,8 @@ class Zones:
         data2 = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
         data2 = data2.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
-        # Stack both tables
         data = np.concatenate((data, data2), axis=0)
 
-        # Remove white padding
         white_filter = np.sum(data, axis=2) == 3 * 255
         data[white_filter, :] = 0
         plt.close()

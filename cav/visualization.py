@@ -9,12 +9,7 @@ from random import randint
 class Icons:
     """
     Class for loading and keeping icons and masks. These icons can be displayed on the map. Class may be configured
-    with the json file (../config/icons.json by default)
-    Parameters:
-        folder: folder with icons
-        filenames: dictionary { class_nr : filename }
-        icons = None # Dictionary { class_nr : original icon image }
-        iconsMasked = None # Dictionary { class_nr : masked icon imaged }
+    with the json file 
     """
     def __init__(self, config_file):
         self.folder = None # folder with icons
@@ -94,11 +89,6 @@ class Map:
                 newmap[y-32:y, x-16:x+16, :] = dst
 
         return newmap
-
-
-
-
-
 
 def plotBoxes(image, boxes, colors=None, copy_img=True):
     """

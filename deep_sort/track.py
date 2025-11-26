@@ -1,4 +1,3 @@
-# vim: expandtab:ts=4:sw=4
 import sys
 sys.path.append('..')
 from cav.objects import Object, BoundingBox, ObjectType
@@ -84,7 +83,6 @@ class Track:
         self._n_init = n_init
         self._max_age = max_age
         
-        # Added by Przemek 2019-10-22
         self.trackedObject = None 
         self.objType = 0
 
@@ -185,8 +183,8 @@ class Track:
 
         if self.trackedObject is None:
             self.trackedObject = Object(ObjectType(self.objType))
-        elif int(self.trackedObject.type) != self.objType:
-            self.trackedObject.type = ObjectType(self.objType) 
+        elif self.trackedObject.type.value != self.objType:
+            self.trackedObject.type = ObjectType(self.objType)
 
         if bbox is not None:
             self.trackedObject.addBoundingBox(bbox)

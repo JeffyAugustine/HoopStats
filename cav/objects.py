@@ -7,7 +7,7 @@ from time import time
 class ObjectType(Enum):
     Unknown = 0
     Player = 1
-    Ball = 2
+    Ball = 37
 
 class BoundingBox:
     def __init__(self, xLeft, xRight, yTop, yBottom, timeStamp=None, params=None, toPoint='BC'):
@@ -18,6 +18,7 @@ class BoundingBox:
         self.timeStamp = timeStamp
         self.toPoint = toPoint
         self.__calculateToPoint()
+        self.objType = None
 
         self.birdEyeX = None
         self.birdEyeY = None
@@ -53,6 +54,8 @@ class Object:
         self.color = tuple(random.randint(0, 255) for _ in range(3))
         self.notDetectedCounter = 0
         self.id = f"{id(self)}_{time()}"
+        self.teamId = -1  
+        self.possession = 0  
 
     def createTracker(self, img, bbox, add_box=True):
         self.tracker = cv2.TrackerCSRT_create()
@@ -78,3 +81,39 @@ class Object:
     def getTrackerCoordinates(self):
         last = self.bboxes[-1]
         return (last.xLeft, last.yTop, last.xRight - last.xLeft, last.yBottom - last.yTop)
+    
+    def getParams(self, asCsv=False, speedLookback=10):
+        """
+        Returns core object parameters used for logging.
+        Supports CSV or dict output.
+        """
+
+        if len(self.bboxes) == 0:
+            return "" if asCsv else {}
+
+        last = self.bboxes[-1]
+
+        params = {
+            "x": last.x,
+            "y": last.y,
+            "birdEyeX": last.birdEyeX if last.birdEyeX is not None else -1,
+            "birdEyeY": last.birdEyeY if last.birdEyeY is not None else -1,
+            "zoneID": last.zoneID if last.zoneID is not None else -1,
+            "timeStamp": last.timeStamp if last.timeStamp is not None else -1,
+            "teamId": self.teamId,
+            "possession": self.possession
+        }
+
+        if asCsv:
+            return "{},{},{},{},{},{},{},{}".format(
+                params["x"],
+                params["y"],
+                params["birdEyeX"],
+                params["birdEyeY"],
+                params["zoneID"],
+                params["timeStamp"],
+                params["teamId"],
+                params["possession"]
+            )
+
+        return params

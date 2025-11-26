@@ -1,4 +1,3 @@
-# vim: expandtab:ts=4:sw=4
 from __future__ import absolute_import
 import numpy as np
 from . import kalman_filter
@@ -135,6 +134,6 @@ class Tracker:
         new_track = Track(
             mean, covariance, self._next_id, self.n_init, self.max_age,
             detection.feature)
-        new_track.updateObject(detection.bbox) # added by Przemek 2019-10-23
+        new_track.updateObject(detection.bbox) 
         self.tracks.append(new_track)
         self._next_id += 1

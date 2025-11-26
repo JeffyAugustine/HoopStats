@@ -1,6 +1,3 @@
-### I put these functions temporarily here, to make the notebooks more readable.
-### TO DO: It should be described and moved to modules
-
 import os
 import sys
 import tensorflow as tf

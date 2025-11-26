@@ -10,5 +10,4 @@ def geo2Angle(lat1, lon1, lat2, lon2):
 
     brng = math.degrees(brng)
     brng = (brng + 360) % 360
-    #brng = 360 - brng # count degrees clockwise - remove to make counter-clockwise
     return brng
