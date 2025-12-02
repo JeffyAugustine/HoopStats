@@ -96,7 +96,7 @@ hoopstats/
 
 1. **Clone and setup environment:**
 ```bash
-git clone [<repository-url>](https://github.com/JeffyAugustine/HoopStats.git)
+git clone https://github.com/JeffyAugustine/HoopStats.git
 cd HoopStats
 pip install -r requirements.txt
 ```
