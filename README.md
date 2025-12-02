@@ -114,6 +114,14 @@ jupyter notebook 1-CameraToSky.ipynb
 - Creates `params.json` with transformation matrices
 - Validates zone mask (5 zones: 0=background, 1-4=court zones)
 
+![frame_view1](https://github.com/user-attachments/assets/f8cb64a4-c781-4674-9930-82ea9cc71850)
+
+![Sky View](https://github.com/user-attachments/assets/9a10e2d6-620f-4e85-b077-6758485ad60e)
+
+<img width="3840" height="2160" alt="mask_org" src="https://github.com/user-attachments/assets/506601ea-bf5e-49fd-a0f9-50d783973efb" />
+
+*Above images are sample images of camera_view, Sky_view and zone_mask.*
+
 #### **Step 2: Object Detection**
 ```bash
 jupyter notebook 2-CreateDetections.ipynb
@@ -145,6 +153,10 @@ jupyter notebook 4-GenerateVideo.ipynb
   - Player trails (white fading lines)
   - ID labels and frame counters
 - Output: `tracking_output/tracking_video.avi`
+
+<img width="1918" height="1072" alt="image" src="https://github.com/user-attachments/assets/00ff3354-fcdf-439e-a708-c54adb7bf162" />
+*Sample frame of generated video*
+
 
 #### **Step 5: Analytics & Insights**
 ```bash
