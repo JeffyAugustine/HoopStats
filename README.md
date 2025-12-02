@@ -231,6 +231,7 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 - **Key Pass**: Player 17 → Player 16 (successful, led to score)
 
 <img width="2380" height="2380" alt="Untitled design" src="https://github.com/user-attachments/assets/06203d67-d38b-4191-a6b5-0a7a6173b917" />
+
 *Sample Visualizations*
 
 ---
