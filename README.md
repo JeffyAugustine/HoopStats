@@ -155,6 +155,7 @@ jupyter notebook 4-GenerateVideo.ipynb
 - Output: `tracking_output/tracking_video.avi`
 
 <img width="1918" height="1072" alt="image" src="https://github.com/user-attachments/assets/00ff3354-fcdf-439e-a708-c54adb7bf162" />
+
 *Sample frame of generated video*
 
 
