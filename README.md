@@ -1,4 +1,4 @@
-# 🏀 HoopStats: Basketball Analysis & Tracking System
+# HoopStats: Basketball Analysis & Tracking System
 
 ## Project Overview
 
