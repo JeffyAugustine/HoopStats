@@ -2,20 +2,20 @@
 
 ## Project Overview
 
-**HoopStats** is a comprehensive basketball analytics project that automates player tracking, movement analysis, and game statistics generation from simple sideview video footage. The system combines computer vision, deep learning, and geometric transformations to provide insights into player performance, team strategies, and game dynamics.
+**HoopStats** is a basketball analytics project focused on automating player tracking, movement analysis, and game statistics generation from simple sideview video footage. The system combines computer vision, deep learning, and geometric transformations to provide insights into player performance, team strategies, and game dynamics.
 
-**HoopStats** implements a basketball detection and tracking pipeline using Faster R-CNN for object detection and Deep SORT for multi-object tracking. Perspective transformation is used to map detections into a bird’s-eye court view, followed by basic zone-based and movement analysis.
+The project implements a basketball detection and tracking pipeline using Faster R-CNN for object detection and Deep SORT for multi-object tracking. Perspective transformation is used to map detections into a bird’s-eye court view, followed by basic zone-based and movement analysis.
 
 ---
 
 ## Key Features
 
-- **Multi-Object Tracking**: Players & ball detection using Faster R-CNN with Deep SORT
-- **Court Transformation**: Camera view to bird's-eye view perspective correction
+- **Multi-Object Tracking (MOT)**: Players and ball detected using Faster R-CNN with Deep SORT
+- **Court Perspective Transformation**: Camera view to bird's-eye view perspective conversion
 - **Zone Analysis**: 4-court zone tracking with occupancy metrics
-- **Advanced Analytics**: Speed, acceleration, possession, turnovers, passes, and player spread
-- **Visualization**: Heatmaps, speed graphs, zone distributions, and annotated video output
-- **Automated Statistics**: Player roles, hustle index, team performance metrics
+- **Analytics**: Speed, acceleration, possession, turnovers, passes, and player spread
+- **Visualization**: Heatmaps, speed graphs, zone distributions, and annotated video output visualizations
+- **Player/Team Statistics**: Player roles, hustle index, team performance metrics
 
 ---
 
@@ -23,7 +23,6 @@
 
 ```
 hoopstats/
-│
 ├── Core Modules
 │   ├── cav/                          # Core Analysis & Vision
 │   │   ├── detection.py              # TensorFlow object detector
@@ -36,7 +35,6 @@ hoopstats/
 │   ├── courtvisionlib/               # Vision utilities
 │   │   ├── functions.py              # Image display & frame extraction
 │   │   └── helper.py                 # Deep SORT helpers & video generation
-│   │
 │   └── deep_sort/                    # Multi-object tracking
 │       ├── detection.py              # Detection wrapper
 │       ├── tracker.py                # Multi-target tracker
@@ -45,7 +43,6 @@ hoopstats/
 │       ├── nn_matching.py            # Nearest neighbor matching
 │       ├── iou_matching.py           # IOU-based matching
 │       └── linear_assignment.py      # Hungarian algorithm
-│
 ├── Main Pipeline (Notebooks)
 │   ├── 1-CameraToSky.ipynb          # Perspective transform setup
 │   ├── 2-CreateDetections.ipynb     # Object detection processing
@@ -57,7 +54,6 @@ hoopstats/
 │       ├── player_speed_metrics_filtered.csv
 │       ├── player_spread_analysis.csv
 │       └── player_zone_metrics_cumulative.csv
-│
 ├── Data & Assets
 │   ├── HoopStats_assets/
 │   │   ├── models/                  # Pretrained models
@@ -68,21 +64,18 @@ hoopstats/
 │   │       ├── detections.p        # Pickled detections
 │   │       ├── videopath.p         # Video path reference
 │   │       └── zones_detections.csv
-│   │
 │   ├── data/                        # Raw video files
 │   ├── icons/                       # Visualization icons
 │   ├── images/                      # Reference images
 │   └── tracking_output/             # Final outputs
 │       ├── frames/                  # Processed frames
 │       └── tracking_video.avi       # Annotated video
-│
 ├── Configuration
 │   ├── Q1_side_30-60.mp4           # Sample video (3840×2160)
 │   ├── project_config.py           # Project settings
 │   ├── params.json                 # Transform parameters
 │   ├── icons_simple.json           # Icon mapping
 │   └── requirements.txt            # Dependencies
-│
 └── README.md                    # This file
 ```
 
@@ -92,7 +85,7 @@ hoopstats/
 
 ### Prerequisites
 - Python version 3.8+
-- CUDA-capable GPU (recommended)
+- CUDA-capable GPU (recommended, CPU works but is slow)
 
 ### Installation
 
@@ -331,6 +324,11 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 2. **Tracking phase**: ~25.40 fps
 3. **Video resolution**: 3840×2160 (4K) provides best accuracy
 4. **Downscaling**: Possible for faster processing
+
+## Limitations
+- Detection accuracy depends on video quality and camera angle.
+- The system was tested on a single sideview camera and does not handle occlusions perfectly.
+- Speed estimates are approximate due to frame rate and calibration error.
 
 ---
 
