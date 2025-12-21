@@ -92,8 +92,7 @@ def create_box_encoder(model_filename, input_name="images",
 def extract_image_patch(image, bbox, patch_shape):
     """Extract image patch from bounding box.
 
-    Parameters
-    ----------
+    Parameters:
     image : ndarray
         The full image.
     bbox : array_like
@@ -104,8 +103,7 @@ def extract_image_patch(image, bbox, patch_shape):
         of the patch shape, then it is clipped at the image boundaries.
         If None, the shape is computed from :arg:`bbox`.
 
-    Returns
-    -------
+    Returns:
     ndarray | NoneType
         An image patch showing the :arg:`bbox`, optionally reshaped to
         :arg:`patch_shape`.
@@ -143,11 +141,11 @@ def generate_video(fps, inputPath='./frames/', outputFile = './output_video.avi'
     """
     Generates a video based on given parametrers
     Arguments:
-        fps        - frames per second
-        inputPath  - folder with frames
+        fps - frames per second
+        inputPath - folder with frames
         outputFile - video file
-        fourcc     - string used to create an cv2.VideoWriter_fourcc object
-        length     - Maximum lentgh of the video (in seconds). If none, all frames are used. 
+        fourcc - string used to create an cv2.VideoWriter_fourcc object
+        length - Maximum lentgh of the video (in seconds). If none, all frames are used. 
     """
     t = time()
     out = None
