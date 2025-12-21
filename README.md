@@ -24,59 +24,59 @@ The project implements a basketball detection and tracking pipeline using Faster
 ```
 hoopstats/
 ├── Core Modules
-│   ├── cav/                          # Core Analysis & Vision
-│   │   ├── detection.py              # TensorFlow object detector
-│   │   ├── objects.py                # BoundingBox, Object, ObjectType classes
-│   │   ├── zones.py                  # Zone tracking & analytics
-│   │   ├── parameters.py             # Perspective transform management
-│   │   ├── visualization.py          # Map rendering & plotting
-│   │   └── functions.py              # Geometric utilities
+│   ├── cav/ # Core Analysis & Vision
+│   │   ├── detection.py # TensorFlow object detector
+│   │   ├── objects.py # BoundingBox, Object, ObjectType classes
+│   │   ├── zones.py # Zone tracking & analytics
+│   │   ├── parameters.py # Perspective transform management
+│   │   ├── visualization.py # Map rendering & plotting
+│   │   └── functions.py # Geometric utilities
 │   │
-│   ├── courtvisionlib/               # Vision utilities
-│   │   ├── functions.py              # Image display & frame extraction
-│   │   └── helper.py                 # Deep SORT helpers & video generation
-│   └── deep_sort/                    # Multi-object tracking
-│       ├── detection.py              # Detection wrapper
-│       ├── tracker.py                # Multi-target tracker
-│       ├── track.py                  # Track management
-│       ├── kalman_filter.py          # Kalman filtering
-│       ├── nn_matching.py            # Nearest neighbor matching
-│       ├── iou_matching.py           # IOU-based matching
-│       └── linear_assignment.py      # Hungarian algorithm
+│   ├── courtvisionlib/ # Vision utilities
+│   │   ├── functions.py # Image display & frame extraction
+│   │   └── helper.py # Deep SORT helpers & video generation
+│   └── deep_sort/ # Multi-object tracking
+│       ├── detection.py # Detection wrapper
+│       ├── tracker.py # Multi-target tracker
+│       ├── track.py # Track management
+│       ├── kalman_filter.py # Kalman filtering
+│       ├── nn_matching.py # Nearest neighbor matching
+│       ├── iou_matching.py # IOU-based matching
+│       └── linear_assignment.py # Hungarian algorithm
 ├── Main Pipeline (Notebooks)
-│   ├── 1-CameraToSky.ipynb          # Perspective transform setup
-│   ├── 2-CreateDetections.ipynb     # Object detection processing
-│   ├── 3-DetectZones.ipynb          # Tracking & zone analysis
-│   ├── 4-GenerateVideo.ipynb        # Output video generation
-│   └── analysis/                    # Advanced analytics
-│       ├── Analysis.ipynb           # Visualization & insights
-│       ├── Analysis-2.ipynb         # Numerical analysis & metrics
+│   ├── 1-CameraToSky.ipynb # Perspective transform setup
+│   ├── 2-CreateDetections.ipynb # Object detection processing
+│   ├── 3-DetectZones.ipynb # Tracking & zone analysis
+│   ├── 4-GenerateVideo.ipynb # Output video generation
+│   └── analysis/ # Advanced analytics
+│       ├── Analysis.ipynb # Visualization & insights
+│       ├── Analysis-2.ipynb # Numerical analysis & metrics
 │       ├── player_speed_metrics_filtered.csv
 │       ├── player_spread_analysis.csv
 │       └── player_zone_metrics_cumulative.csv
 ├── Data & Assets
 │   ├── HoopStats_assets/
-│   │   ├── models/                  # Pretrained models
-│   │   │   ├── frcnn/              # Faster R-CNN
-│   │   │   └── mars/               # Deep SORT re-ID
-│   │   └── data/                   # Intermediate results
-│   │       ├── frames_raw/         # Extracted frames
-│   │       ├── detections.p        # Pickled detections
-│   │       ├── videopath.p         # Video path reference
+│   │   ├── models/ # Pretrained models
+│   │   │   ├── frcnn/ # Faster R-CNN
+│   │   │   └── mars/ # Deep SORT re-ID
+│   │   └── data/ # Intermediate results
+│   │       ├── frames_raw/ # Extracted frames
+│   │       ├── detections.p # Pickled detections
+│   │       ├── videopath.p # Video path reference
 │   │       └── zones_detections.csv
-│   ├── data/                        # Raw video files
-│   ├── icons/                       # Visualization icons
-│   ├── images/                      # Reference images
-│   └── tracking_output/             # Final outputs
-│       ├── frames/                  # Processed frames
-│       └── tracking_video.avi       # Annotated video
+│   ├── data/ # Raw video files
+│   ├── icons/ # Visualization icons
+│   ├── images/ # Reference images
+│   └── tracking_output/ # Final outputs
+│       ├── frames/ # Processed frames
+│       └── tracking_video.avi # Annotated video
 ├── Configuration
-│   ├── Q1_side_30-60.mp4           # Sample video (3840×2160)
-│   ├── project_config.py           # Project settings
-│   ├── params.json                 # Transform parameters
-│   ├── icons_simple.json           # Icon mapping
-│   └── requirements.txt            # Dependencies
-└── README.md                    # This file
+│   ├── Q1_side_30-60.mp4  # Sample video (3840×2160)
+│   ├── project_config.py # Project settings
+│   ├── params.json  # Transform parameters
+│   ├── icons_simple.json # Icon mapping
+│   └── requirements.txt # Dependencies
+└── README.md  # This file
 ```
 
 ---
@@ -157,8 +157,8 @@ jupyter notebook 4-GenerateVideo.ipynb
 #### **Step 5: Analytics & Insights**
 Analysis notebooks are located in the `analysis/` directory.
 ```bash
-jupyter notebook analysis/Analysis.ipynb      # Visualizations
-jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
+jupyter notebook analysis/Analysis.ipynb  # Visualizations
+jupyter notebook analysis/Analysis-2.ipynb  # Numerical analysis
 ```
 - Comprehensive analytics generation
 - Player and team performance metrics
