@@ -94,10 +94,10 @@ def plotBoxes(image, boxes, colors=None, copy_img=True):
     """
     Plots bounding boxes to the image
     Arguments:
-        image       - image we want to add the boxes to
-        boxes       - boxes (list of instances of BoundingBox objects from this library)
-        colors      - tuple or list with colors. If none, the colors will be set randomly
-        copy_img    - if True this function is doing image.copy() before plotting bounding boxes
+        image - image we want to add the boxes to
+        boxes - boxes (list of instances of BoundingBox objects from this library)
+        colors - tuple or list with colors. If none, the colors will be set randomly
+        copy_img - if True this function is doing image.copy() before plotting bounding boxes
     Returns:
         Image with bounding boxes
     """
@@ -119,9 +119,9 @@ def bsmImg(bsm, imgsize = (450, 450), framecolor = (0, 0, 0)):
     """
     Returns an image with bsm message
     Arguments:
-        bsm     - bsm message (as a dictionary)
+        bsm - bsm message (as a dictionary)
         imgsize - size of image (y, x). Default = (450, 450)
-        framecolor    - tuple with a BGR color of the frame around image (default = black, no color)
+        framecolor - tuple with a BGR color of the frame around image (default = black, no color)
     Returns:
         Image (numpy array)
     """
