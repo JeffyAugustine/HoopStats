@@ -2,7 +2,9 @@
 
 ## Project Overview
 
-**HoopStats** is a comprehensive basketball analytics platform that automates player tracking, movement analysis, and game statistics generation from video footage. The system combines computer vision, deep learning, and geometric transformations to provide detailed insights into player performance, team strategies, and game dynamics.
+**HoopStats** is a comprehensive basketball analytics project that automates player tracking, movement analysis, and game statistics generation from simple sideview video footage. The system combines computer vision, deep learning, and geometric transformations to provide insights into player performance, team strategies, and game dynamics.
+
+**HoopStats** implements a basketball detection and tracking pipeline using Faster R-CNN for object detection and Deep SORT for multi-object tracking. Perspective transformation is used to map detections into a bird’s-eye court view, followed by basic zone-based and movement analysis.
 
 ---
 
@@ -94,7 +96,7 @@ hoopstats/
 
 ### Installation
 
-1. **Clone and setup environment:**
+1. **Clone environment and install dependencies:**
 ```bash
 git clone https://github.com/JeffyAugustine/HoopStats.git
 cd HoopStats
@@ -120,7 +122,7 @@ jupyter notebook 1-CameraToSky.ipynb
 
 <img width="3840" height="2160" alt="mask_org" src="https://github.com/user-attachments/assets/506601ea-bf5e-49fd-a0f9-50d783973efb" />
 
-*Above images are sample images of camera_view, Sky_view and zone_mask.*
+*The above images are sample images of camera_view, Sky_view and zone_mask.*
 
 #### **Step 2: Object Detection**
 ```bash
@@ -160,6 +162,7 @@ jupyter notebook 4-GenerateVideo.ipynb
 
 
 #### **Step 5: Analytics & Insights**
+Analysis notebooks are located in the `analysis/` directory.
 ```bash
 jupyter notebook analysis/Analysis.ipynb      # Visualizations
 jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
@@ -316,11 +319,12 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 - TensorFlow automatically uses available GPUs
 - Set CUDA_VISIBLE_DEVICES for multi-GPU systems
 - Batch size: 32 for feature extraction
+- This project was run and tested using Google Colab GPU resources
 
 ### Memory Management
 - Frame-by-frame processing for long videos
 - Pickle files for intermediate storage
-- Clear GPU memory between notebooks
+- Make sure to clear GPU memory between notebooks
 
 ### Speed vs Accuracy Trade-offs
 1. **Detection phase**: ~13.35 fps (GPU dependent)
