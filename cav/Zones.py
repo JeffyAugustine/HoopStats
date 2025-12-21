@@ -6,8 +6,7 @@ from pandas import DataFrame
 
 class Zones:
     """
-    HoopStats Zone Tracking Module
-    ---------------------------------
+    HoopStats Zone Tracking Module:
     This class detects and analyzes player/ball movement across predefined
     basketball court zones (defined via a color-coded mask image).
     """
@@ -172,5 +171,5 @@ class Zones:
         white_filter = np.sum(data, axis=2) == 3 * 255
         data[white_filter, :] = 0
         plt.close()
-        mpl.use(backend_)  # Restore backend
+        mpl.use(backend_) # Restore backend
         return data
