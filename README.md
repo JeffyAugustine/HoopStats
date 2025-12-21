@@ -17,13 +17,13 @@
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 hoopstats/
 │
 ├── Core Modules
-│   ├── cav/                           # Core Analysis & Vision
+│   ├── cav/                          # Core Analysis & Vision
 │   │   ├── detection.py              # TensorFlow object detector
 │   │   ├── objects.py                # BoundingBox, Object, ObjectType classes
 │   │   ├── zones.py                  # Zone tracking & analytics
@@ -86,10 +86,10 @@ hoopstats/
 
 ---
 
-## Quick Start
+## How To Run
 
 ### Prerequisites
-- Python 3.8+
+- Python version 3.8+
 - CUDA-capable GPU (recommended)
 
 ### Installation
