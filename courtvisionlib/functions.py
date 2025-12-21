@@ -6,10 +6,10 @@ def displayImages(im1, im2, brg2rgb1=True, brg2rgb2=True, im1_title='Original Im
     """
     Displays two images.
     Arguments:
-        im2, im2           - images to be displayed
+        im2, im2 - images to be displayed
         brg2rgb1, brg2rgb2 - if true, the BGR2RGB should be applied on images 1 and 2
         im1title, im2title - titles of images
-        fontsize           - fontsize
+        fontsize - fontsize
     Returns: 
         Handles to the images
     """
@@ -40,10 +40,10 @@ def extractFrame(video_path = None, cap = None, frameno = 1, dest_file = None, d
     Extracts (and optionally saves) one frame from the video
     Arguments:
         video_path - path to the video
-        cap        - captured video (results of cv2.VideoCapture). Works only if video_path is None
-        frameno    - number of frame to be extracted
-        dest_file  - where should the frame be saved
-        display    - it True, the frame is displayed        
+        cap - captured video (results of cv2.VideoCapture). Works only if video_path is None
+        frameno - number of frame to be extracted
+        dest_file - where should the frame be saved
+        display - it True, the frame is displayed        
     """
     if video_path is None:
         if cap is None:
@@ -68,8 +68,8 @@ def displayPoints(points, M, img1_path, img2_path):
     Displays points (source and transformed) in two images.
     First four points are display red, all others blue.
     Arguments:
-        points    - points to be displayed
-        M         - perspective transform matrix
+        points - points to be displayed
+        M - perspective transform matrix
         img1_path - path to image with source points
         img2_path - path to image with transformed points
     Returns:
