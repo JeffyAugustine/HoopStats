@@ -1,12 +1,12 @@
 # 🏀 HoopStats: Basketball Analysis & Tracking System
 
-## 📋 Project Overview
+## Project Overview
 
 **HoopStats** is a comprehensive basketball analytics platform that automates player tracking, movement analysis, and game statistics generation from video footage. The system combines computer vision, deep learning, and geometric transformations to provide detailed insights into player performance, team strategies, and game dynamics.
 
 ---
 
-## 🎯 Key Features
+## Key Features
 
 - **Multi-Object Tracking**: Players & ball detection using Faster R-CNN with Deep SORT
 - **Court Transformation**: Camera view to bird's-eye view perspective correction
@@ -22,7 +22,7 @@
 ```
 hoopstats/
 │
-├── 📦 Core Modules
+├── Core Modules
 │   ├── cav/                           # Core Analysis & Vision
 │   │   ├── detection.py              # TensorFlow object detector
 │   │   ├── objects.py                # BoundingBox, Object, ObjectType classes
@@ -44,7 +44,7 @@ hoopstats/
 │       ├── iou_matching.py           # IOU-based matching
 │       └── linear_assignment.py      # Hungarian algorithm
 │
-├── 📓 Main Pipeline (Notebooks)
+├── Main Pipeline (Notebooks)
 │   ├── 1-CameraToSky.ipynb          # Perspective transform setup
 │   ├── 2-CreateDetections.ipynb     # Object detection processing
 │   ├── 3-DetectZones.ipynb          # Tracking & zone analysis
@@ -56,7 +56,7 @@ hoopstats/
 │       ├── player_spread_analysis.csv
 │       └── player_zone_metrics_cumulative.csv
 │
-├── 🗃️ Data & Assets
+├── Data & Assets
 │   ├── HoopStats_assets/
 │   │   ├── models/                  # Pretrained models
 │   │   │   ├── frcnn/              # Faster R-CNN
@@ -74,19 +74,19 @@ hoopstats/
 │       ├── frames/                  # Processed frames
 │       └── tracking_video.avi       # Annotated video
 │
-├── ⚙️ Configuration
+├── Configuration
 │   ├── Q1_side_30-60.mp4           # Sample video (3840×2160)
 │   ├── project_config.py           # Project settings
 │   ├── params.json                 # Transform parameters
 │   ├── icons_simple.json           # Icon mapping
 │   └── requirements.txt            # Dependencies
 │
-└── 📄 README.md                    # This file
+└── README.md                    # This file
 ```
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8+
@@ -171,7 +171,7 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 ---
 
 
-## 📊 Analysis Results (Sample Video: Q1_side_30-60.mp4)
+## Analysis Results (Sample Video: Q1_side_30-60.mp4)
 
 ### Player Performance Metrics
 - **Total Players Tracked**: 13 (10 active + 3 refree)
@@ -236,7 +236,7 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 
 ---
 
-## 🛠️ Technical Details
+## Technical Details
 
 ### Object Detection
 - **Model**: Faster R-CNN (TensorFlow)
@@ -273,7 +273,7 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 
 ---
 
-## 📈 Output Files
+## Output Files
 
 ### Generated Analytics
 1. `player_speed_metrics_filtered.csv` - Speed & acceleration metrics
@@ -291,7 +291,7 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 
 ---
 
-## 🔍 Customization Guide
+## Customization Guide
 
 ### For New Videos
 1. **Replace video file**: Place new MP4 in root directory
@@ -310,7 +310,7 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 
 ---
 
-## ⚡ Performance Optimization
+## Performance Optimization
 
 ### GPU Acceleration
 - TensorFlow automatically uses available GPUs
@@ -330,7 +330,7 @@ jupyter notebook analysis/Analysis-2.ipynb    # Numerical analysis
 
 ---
 
-## 📄 License
+## License
 
 This project is for academic and research purposes.
 
